@@ -1,4 +1,4 @@
-# Portofolio Andi Pratama
+# Portofolio HImawan Ibnu Afif Muzakki
 
 Website portofolio pribadi yang saya buat di Kelas Industri UBIG (Paket 1, Minggu 01 sampai 05).
 Website ini tampil rapi di ponsel, tablet, dan laptop.
@@ -23,5 +23,5 @@ Website ini tampil rapi di ponsel, tablet, dan laptop.
 
 ## Tautan
 
-- Website: menyusul setelah *deploy* ke Vercel
+- Website: https://portfoliozakkinew.vercel.app/
 - Dibuat oleh: Himawan IBnu Afif Muzakki, SMKN 1 Pasuruan
