@@ -10,24 +10,27 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <script src="JS/main.js" defer></script>
+  <script src="JS/latihan.js" defer></script>
+  <script src="JS/logika.js" defer></script>
+  <script src="JS/kalkulator.js" defer></script>
 </head>
 <body>
   <header>
     <div class="container navbar">
       <h1>Himawan Ibnu Afif Muzakki</h1>
-      <nav class="menu-laptop">
+      <nav class="menu-laptop" aria-label="Navigasi utama">
         <ul>
-          <li><a href="index.html">Beranda</a></li>
+          <li><a href="index.html" aria-current="page">Beranda</a></li>
           <li><a href="proyek.html">Proyek</a></li>
           <li><a href="kontak.html">Kontak</a></li>
         </ul>
       </nav>
-      <!-- Tantangan: menu ponsel yang bisa dibuka-tutup -->
+      <button type="button" id="tombol-tema" aria-label="Ubah tema halaman" aria-pressed="false">Mode Gelap</button>
       <details class="menu-ponsel">
         <summary>Menu</summary>
-        <nav>
+        <nav aria-label="Navigasi utama">
           <ul>
-            <li><a href="index.html">Beranda</a></li>
+            <li><a href="index.html" aria-current="page">Beranda</a></li>
             <li><a href="proyek.html">Proyek</a></li>
             <li><a href="kontak.html">Kontak</a></li>
           </ul>
@@ -39,7 +42,7 @@
   <main>
     <div class="container">
       <section class="hero">
-        <img src="img/fotobiru.jpg" alt="Foto profil Andi Pratama" width="180">
+        <img src="img/fotobiru.jpg" alt="Foto profil Himawan Ibnu Afif Muzakki" width="180">
         <div>
           <h2>Halo, saya Zakki!</h2>
           <p>Siswa kelas X SMK, calon Junior Web Developer di Kelas Industri UBIG.</p>
@@ -76,13 +79,8 @@
 
         <section class="kartu">
           <h2>Keahlian</h2>
-          <ul>
-            <li>HTML dasar (sedang dipelajari)</li>
-            <li>Mengetik cepat</li>
-            <li>Video editing</li>
-            <li>Fotografi</li>
-            <li>Videografi</li>
-          </ul>
+          <ul id="daftar-skill"></ul>
+          <p id="jumlah-skill" aria-live="polite"></p>
         </section>
       </div>
 

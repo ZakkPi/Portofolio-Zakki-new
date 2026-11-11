@@ -1,131 +1,193 @@
 // JavaScript portofolio Himawan Ibnu Afif Muzakki
-// Dipasang di ketiga halaman dengan defer
 
-// 1. Daftar keahlian (halaman Beranda)
 const skills = [
-  { nama: "HTML", level: "Menengah" },
-  { nama: "CSS", level: "Menengah" },
-  { nama: "Git dan GitHub", level: "Dasar" },
-  { nama: "Desain poster dengan Canva", level: "Mahir" }
+  { nama: "HTML dasar", level: "Sedang dipelajari" },
+  { nama: "Mengetik cepat", level: "Dasar" },
+  { nama: "Video editing", level: "Dasar" },
+  { nama: "Fotografi", level: "Dasar" },
+  { nama: "Videografi", level: "Dasar" }
 ];
-skills.push({ nama: "JavaScript", level: "Dasar" });
 
 const daftarSkill = document.querySelector("#daftar-skill");
 const jumlahSkill = document.querySelector("#jumlah-skill");
 
-if (daftarSkill) {
-  skills.forEach((skill) => {
+if (daftarSkill && jumlahSkill) {
+  const daftarItemSkill = skills.map((skill) => {
     const item = document.createElement("li");
     item.textContent = `${skill.nama} (${skill.level})`;
-    daftarSkill.appendChild(item);
+    return item;
   });
+
+  daftarSkill.replaceChildren(...daftarItemSkill);
   jumlahSkill.textContent = `Ada ${skills.length} keahlian yang sedang saya kembangkan.`;
 }
 
-// 2. Tema gelap (semua halaman)
 const tombolTema = document.querySelector("#tombol-tema");
 
-tombolTema.addEventListener("click", () => {
-  document.body.classList.toggle("gelap");
-  if (document.body.classList.contains("gelap")) {
-    tombolTema.textContent = "Mode Terang";
-  } else {
-    tombolTema.textContent = "Mode Gelap";
-  }
-});
-
-// 3. Penghitung karakter pesan (halaman Kontak)
-const kotakPesan = document.querySelector("#pesan");
-const hitungKarakter = document.querySelector("#hitung-karakter");
-
-if (kotakPesan) {
-  kotakPesan.addEventListener("input", () => {
-    hitungKarakter.textContent = `${kotakPesan.value.length}/300 karakter`;
+if (tombolTema) {
+  tombolTema.addEventListener("click", () => {
+    const temaGelap = document.body.classList.toggle("gelap");
+    tombolTema.textContent = temaGelap ? "Mode Terang" : "Mode Gelap";
+    tombolTema.setAttribute("aria-pressed", String(temaGelap));
   });
 }
 
-// 4. Daftar proyek dan filter (halaman Proyek)
+const formKontak = document.querySelector("#form-kontak");
+
+if (formKontak) {
+  const kotakPesan = formKontak.querySelector("#pesan");
+  const hitungKarakter = formKontak.querySelector("#hitung-karakter");
+  const statusForm = formKontak.querySelector("#status-form");
+  const maksimalKarakter = 300;
+
+  const perbaruiHitungKarakter = () => {
+    if (kotakPesan && hitungKarakter) {
+      hitungKarakter.textContent = `${kotakPesan.value.length}/${maksimalKarakter} karakter`;
+    }
+  };
+
+  perbaruiHitungKarakter();
+  kotakPesan?.addEventListener("input", perbaruiHitungKarakter);
+
+  formKontak.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    if (!kotakPesan || !statusForm) return;
+
+    const isiPesan = kotakPesan.value.trim();
+    if (!isiPesan) {
+      statusForm.hidden = false;
+      statusForm.textContent = "Pesan tidak boleh kosong.";
+      kotakPesan.focus();
+      return;
+    }
+
+    if (isiPesan.length > maksimalKarakter) {
+      statusForm.hidden = false;
+      statusForm.textContent = `Pesan terlalu panjang (${isiPesan.length}/${maksimalKarakter} karakter).`;
+      kotakPesan.focus();
+      return;
+    }
+
+    const dataForm = new FormData(formKontak);
+    const isiEmail = [
+      `Nama: ${dataForm.get("nama")}`,
+      `Email: ${dataForm.get("email")}`,
+      `Nomor HP: ${dataForm.get("hp")}`,
+      `Keperluan: ${dataForm.get("keperluan")}`,
+      "",
+      isiPesan
+    ].join("\n");
+    const tujuanEmail = "afifsukaujian@gmail.com";
+    const subjek = encodeURIComponent(`Pesan portofolio dari ${dataForm.get("nama")}`);
+
+    statusForm.hidden = false;
+    statusForm.textContent = "Membuka aplikasi email untuk mengirim pesan.";
+    window.location.href = `mailto:${tujuanEmail}?subject=${subjek}&body=${encodeURIComponent(isiEmail)}`;
+  });
+}
+
 const proyek = [
   {
     judul: "Halaman Profil Pertama",
     kategori: "HTML",
-    gambar: "img/proyek-profil.png",
-    alt: "Tangkapan layar halaman profil",
-    deskripsi: "Halaman web pertama saya, dibuat dengan HTML dasar."
+    gambar: "img/Halamanertama.png",
+    alt: "Tangkapan layar halaman profil pertama",
+    deskripsi: "Halaman perkenalan diri yang dibuat dengan HTML."
   },
   {
     judul: "Form Kontak",
     kategori: "HTML",
-    gambar: "img/proyek-kontak.png",
-    alt: "Tangkapan layar form kontak",
-    deskripsi: "Form dengan label dan validasi bawaan browser."
+    gambar: "img/TabelKontak.png",
+    alt: "Tangkapan layar halaman form kontak",
+    deskripsi: "Form kontak dengan isian nama, email, nomor HP, dan pesan."
   },
   {
-    judul: "Tabel Jadwal Belajar",
+    judul: "Jadwal Belajar",
     kategori: "HTML",
-    gambar: "img/proyek-jadwal.png",
-    alt: "Tangkapan layar tabel jadwal",
-    deskripsi: "Jadwal belajar mingguan dengan thead dan tbody."
+    gambar: "img/JadwalBelajar.png",
+    alt: "Tangkapan layar tabel jadwal belajar",
+    deskripsi: "Tabel jadwal belajar mingguan yang dibuat dengan HTML."
   },
   {
     judul: "Portofolio Responsif",
     kategori: "CSS",
-    gambar: "img/proyek-responsif.png",
+    gambar: "img/portofolio.png",
     alt: "Tangkapan layar portofolio responsif",
-    deskripsi: "Rapi di ponsel, tablet, dan laptop dengan Flexbox."
+    deskripsi: "Halaman portofolio dengan tata letak dan gaya CSS responsif."
   },
   {
-    judul: "Kalkulator Nilai Rapor",
+    judul: "Latihan JavaScript Dasar",
     kategori: "JavaScript",
-    gambar: "img/proyek-kalkulator.png",
-    alt: "Tangkapan layar kalkulator nilai",
-    deskripsi: "Rata-rata dan predikat nilai dengan fungsi JavaScript."
+    gambar: "img/latihan1JS.png",
+    alt: "Tangkapan layar hasil latihan JavaScript dasar di console",
+    deskripsi: "Hasil latihan variabel, kondisi, dan fungsi JavaScript."
   },
   {
-    judul: "Lima Soal Logika",
+    judul: "Latihan Logika JavaScript",
     kategori: "JavaScript",
-    gambar: "img/proyek-logika.png",
-    alt: "Tangkapan layar uji lima soal logika",
-    deskripsi: "Lima fungsi logika yang masing-masing diuji 3 masukan."
+    gambar: "img/logikaJS.png",
+    alt: "Tangkapan layar hasil lima latihan logika JavaScript di console",
+    deskripsi: "Hasil lima latihan fungsi logika JavaScript di console."
   }
 ];
 
 const daftarProyek = document.querySelector("#daftar-proyek");
 const jumlahProyek = document.querySelector("#jumlah-proyek");
+const filterProyek = document.querySelector("#filter-proyek");
 
 function buatKartu(item) {
-  return `
-    <article class="kartu">
-      <span class="label">${item.kategori}</span>
-      <h3>${item.judul}</h3>
-      <img src="${item.gambar}" alt="${item.alt}" width="280">
-      <p>${item.deskripsi}</p>
-    </article>
-  `;
+  const kartu = document.createElement("article");
+  kartu.className = "kartu";
+
+  const label = document.createElement("span");
+  label.className = "label";
+  label.textContent = item.kategori;
+
+  const judul = document.createElement("h3");
+  judul.textContent = item.judul;
+
+  const gambar = document.createElement("img");
+  gambar.src = item.gambar;
+  gambar.alt = item.alt;
+  gambar.width = 280;
+  gambar.loading = "lazy";
+
+  const deskripsi = document.createElement("p");
+  deskripsi.textContent = item.deskripsi;
+
+  kartu.append(label, judul, gambar, deskripsi);
+  return kartu;
 }
 
-function tampilkanProyek(daftar) {
-  const semuaKartu = daftar.map((item) => buatKartu(item));
-  daftarProyek.innerHTML = semuaKartu.join("");
-  jumlahProyek.textContent = `Menampilkan ${daftar.length} dari ${proyek.length} proyek`;
-}
+function tampilkanProyek(kategori = "Semua") {
+  if (!daftarProyek || !jumlahProyek) return;
 
-function pasangFilter(idTombol, kategori) {
-  const tombol = document.querySelector(idTombol);
-  if (tombol) {
-    tombol.addEventListener("click", () => {
-      if (kategori === "Semua") {
-        tampilkanProyek(proyek);
-      } else {
-        tampilkanProyek(proyek.filter((item) => item.kategori === kategori));
-      }
+  const proyekTerpilih = kategori === "Semua"
+    ? proyek
+    : proyek.filter((item) => item.kategori === kategori);
+
+  daftarProyek.replaceChildren(...proyekTerpilih.map(buatKartu));
+  jumlahProyek.textContent = `Menampilkan ${proyekTerpilih.length} dari ${proyek.length} proyek.`;
+
+  if (filterProyek) {
+    filterProyek.querySelectorAll("button[data-filter]").forEach((tombol) => {
+      const aktif = tombol.dataset.filter === kategori;
+      tombol.classList.toggle("aktif", aktif);
+      tombol.setAttribute("aria-pressed", String(aktif));
     });
   }
 }
 
-if (daftarProyek) {
-  tampilkanProyek(proyek);
-  pasangFilter("#filter-semua", "Semua");
-  pasangFilter("#filter-javascript", "JavaScript");
+if (daftarProyek && jumlahProyek) {
+  tampilkanProyek();
 }
 
+filterProyek?.addEventListener("click", (event) => {
+  if (!(event.target instanceof Element)) return;
+
+  const tombol = event.target.closest("button[data-filter]");
+  if (tombol && filterProyek.contains(tombol)) {
+    tampilkanProyek(tombol.dataset.filter);
+  }
+});

@@ -9,26 +9,30 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <script src="JS/main.js" defer></script>
+  <script src="JS/latihan.js" defer></script>
+  <script src="JS/logika.js" defer></script>
+  <script src="JS/kalkulator.js" defer></script>
 </head>
 <body>
   <header>
     <div class="container navbar">
       <h1>Himawan Ibnu Afif Muzakki</h1>
-      <nav class="menu-laptop">
+      <nav class="menu-laptop" aria-label="Navigasi utama">
         <ul>
           <li><a href="index.html">Beranda</a></li>
           <li><a href="proyek.html">Proyek</a></li>
-          <li><a href="kontak.html">Kontak</a></li>
+          <li><a href="kontak.html" aria-current="page">Kontak</a></li>
         </ul>
       </nav>
-      <!-- Tantangan: menu ponsel yang bisa dibuka-tutup -->
+      <button type="button" id="tombol-tema" aria-label="Ubah tema halaman" aria-pressed="false">Mode Gelap</button>
       <details class="menu-ponsel">
         <summary>Menu</summary>
-        <nav>
+        <nav aria-label="Navigasi utama">
           <ul>
             <li><a href="index.html">Beranda</a></li>
             <li><a href="proyek.html">Proyek</a></li>
-            <li><a href="kontak.html">Kontak</a></li>
+            <li><a href="kontak.html" aria-current="page">Kontak</a></li>
           </ul>
         </nav>
       </details>
@@ -41,7 +45,7 @@
         <h2>Hubungi Saya</h2>
         <p>Punya pertanyaan atau ingin bekerja sama? Isi form berikut.</p>
 
-        <form>
+        <form id="form-kontak">
           <p>
             <label for="nama">Nama lengkap</label><br>
             <input type="text" id="nama" name="nama" placeholder="Contoh: Budi Santoso" required>
@@ -65,9 +69,11 @@
           </p>
           <p>
             <label for="pesan">Pesan</label><br>
-            <textarea id="pesan" name="pesan" rows="5" cols="40" placeholder="Tulis pesanmu di sini" required></textarea>
+            <textarea id="pesan" name="pesan" rows="5" cols="40" maxlength="300" placeholder="Tulis pesanmu di sini" required></textarea>
           </p>
+          <p id="hitung-karakter" aria-live="polite">0/300 karakter</p>
           <button type="submit">Kirim Pesan</button>
+          <p id="status-form" class="form-status" role="status" aria-live="polite" hidden></p>
         </form>
       </section>
     </div>

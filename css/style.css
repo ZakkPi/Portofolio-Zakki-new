@@ -157,6 +157,28 @@ main {
   margin-bottom: 0;
 }
 
+.filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.tombol-filter.aktif {
+  background-color: #1D3557;
+}
+
+.label {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  margin-bottom: 0.5rem;
+  border-radius: 999px;
+  background-color: #F1FAEE;
+  color: #1D3557;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
 article img {
   border-radius: 8px;
   border: 1px solid #DDDDDD;
@@ -212,6 +234,57 @@ button {
   cursor: pointer;
 }
 
+.form-status {
+  margin-top: 1rem;
+  font-weight: 600;
+}
+
+body.gelap {
+  color: #E5E7EB;
+  background-color: #111827;
+}
+
+body.gelap h1,
+body.gelap h2,
+body.gelap h3 {
+  color: #E5E7EB;
+}
+
+body.gelap header,
+body.gelap footer {
+  background-color: #0B1220;
+}
+
+body.gelap header h1 {
+  color: #FFFFFF;
+}
+
+body.gelap .kartu {
+  background-color: #1F2937;
+  border-color: #374151;
+}
+
+body.gelap .label {
+  background-color: #374151;
+  color: #F1FAEE;
+}
+
+body.gelap input,
+body.gelap select,
+body.gelap textarea {
+  color: #E5E7EB;
+  background-color: #111827;
+  border-color: #4B5563;
+}
+
+body.gelap th {
+  background-color: #0B1220;
+}
+
+body.gelap td {
+  border-color: #4B5563;
+}
+
 /* 7. Footer */
 footer {
   background-color: #1D3557;
@@ -263,4 +336,3 @@ footer a {
     font-size: 2.75rem;
   }
 }
-
