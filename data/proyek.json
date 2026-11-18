@@ -1,0 +1,44 @@
+[
+  {
+    "judul": "Halaman Profil Pertama",
+    "kategori": "HTML",
+    "gambar": "img/Halamanertama.png",
+    "alt": "Tangkapan layar halaman profil pertama",
+    "deskripsi": "Halaman web pertama saya, dibuat dengan HTML dasar."
+  },
+  {
+    "judul": "Form Kontak",
+    "kategori": "HTML",
+    "gambar": "img/TabelKontak.png",
+    "alt": "Tangkapan layar form kontak",
+    "deskripsi": "Form dengan label dan validasi bawaan browser."
+  },
+  {
+    "judul": "Tabel Jadwal Belajar",
+    "kategori": "HTML",
+    "gambar": "img/JadwalBelajar.png",
+    "alt": "Tangkapan layar tabel jadwal",
+    "deskripsi": "Jadwal belajar mingguan dengan thead dan tbody."
+  },
+  {
+    "judul": "Portofolio Responsif",
+    "kategori": "CSS",
+    "gambar": "img/portofolio.png",
+    "alt": "Tangkapan layar portofolio responsif",
+    "deskripsi": "Rapi di ponsel, tablet, dan laptop dengan media query."
+  },
+  {
+    "judul": "Kalkulator Nilai Rapor",
+    "kategori": "JavaScript",
+    "gambar": "img/latihan1JS.png",
+    "alt": "Tangkapan layar kalkulator nilai",
+    "deskripsi": "Rata-rata dan predikat nilai dengan fungsi JavaScript."
+  },
+  {
+    "judul": "Lima Soal Logika",
+    "kategori": "JavaScript",
+    "gambar": "img/logikaJS.png",
+    "alt": "Tangkapan layar lima soal logika",
+    "deskripsi": "Lima fungsi logika yang masing-masing menyelesaikan satu persoalan."
+  }
+]

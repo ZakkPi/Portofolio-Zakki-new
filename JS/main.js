@@ -1,27 +1,5 @@
 // JavaScript portofolio Himawan Ibnu Afif Muzakki
 
-const skills = [
-  { nama: "HTML dasar", level: "Sedang dipelajari" },
-  { nama: "Mengetik cepat", level: "Dasar" },
-  { nama: "Video editing", level: "Dasar" },
-  { nama: "Fotografi", level: "Dasar" },
-  { nama: "Videografi", level: "Dasar" }
-];
-
-const daftarSkill = document.querySelector("#daftar-skill");
-const jumlahSkill = document.querySelector("#jumlah-skill");
-
-if (daftarSkill && jumlahSkill) {
-  const daftarItemSkill = skills.map((skill) => {
-    const item = document.createElement("li");
-    item.textContent = `${skill.nama} (${skill.level})`;
-    return item;
-  });
-
-  daftarSkill.replaceChildren(...daftarItemSkill);
-  jumlahSkill.textContent = `Ada ${skills.length} keahlian yang sedang saya kembangkan.`;
-}
-
 const tombolTema = document.querySelector("#tombol-tema");
 
 if (tombolTema) {
@@ -87,51 +65,42 @@ if (formKontak) {
   });
 }
 
-const proyek = [
-  {
-    judul: "Halaman Profil Pertama",
-    kategori: "HTML",
-    gambar: "img/Halamanertama.png",
-    alt: "Tangkapan layar halaman profil pertama",
-    deskripsi: "Halaman perkenalan diri yang dibuat dengan HTML."
-  },
-  {
-    judul: "Form Kontak",
-    kategori: "HTML",
-    gambar: "img/TabelKontak.png",
-    alt: "Tangkapan layar halaman form kontak",
-    deskripsi: "Form kontak dengan isian nama, email, nomor HP, dan pesan."
-  },
-  {
-    judul: "Jadwal Belajar",
-    kategori: "HTML",
-    gambar: "img/JadwalBelajar.png",
-    alt: "Tangkapan layar tabel jadwal belajar",
-    deskripsi: "Tabel jadwal belajar mingguan yang dibuat dengan HTML."
-  },
-  {
-    judul: "Portofolio Responsif",
-    kategori: "CSS",
-    gambar: "img/portofolio.png",
-    alt: "Tangkapan layar portofolio responsif",
-    deskripsi: "Halaman portofolio dengan tata letak dan gaya CSS responsif."
-  },
-  {
-    judul: "Latihan JavaScript Dasar",
-    kategori: "JavaScript",
-    gambar: "img/latihan1JS.png",
-    alt: "Tangkapan layar hasil latihan JavaScript dasar di console",
-    deskripsi: "Hasil latihan variabel, kondisi, dan fungsi JavaScript."
-  },
-  {
-    judul: "Latihan Logika JavaScript",
-    kategori: "JavaScript",
-    gambar: "img/logikaJS.png",
-    alt: "Tangkapan layar hasil lima latihan logika JavaScript di console",
-    deskripsi: "Hasil lima latihan fungsi logika JavaScript di console."
-  }
-];
+// 1. Daftar keahlian (halaman Beranda), data dari data/keahlian.json
+const daftarSkill = document.querySelector("#daftar-skill");
+const jumlahSkill = document.querySelector("#jumlah-skill");
 
+async function muatKeahlian() {
+  try {
+    const response = await fetch("data/keahlian.json");
+    if (!response.ok) {
+      throw new Error(`Status ${response.status}`);
+    }
+
+    const skills = await response.json();
+    daftarSkill?.replaceChildren();
+    skills.forEach((skill) => {
+      const item = document.createElement("li");
+      item.textContent = `${skill.nama} (${skill.level})`;
+      daftarSkill?.appendChild(item);
+    });
+
+    if (jumlahSkill) {
+      jumlahSkill.textContent = `Ada ${skills.length} keahlian yang sedang saya kembangkan.`;
+    }
+  } catch (error) {
+    if (jumlahSkill) {
+      jumlahSkill.textContent = "Daftar keahlian gagal dimuat.";
+    }
+    console.error("Data keahlian gagal dimuat:", error);
+  }
+}
+
+if (daftarSkill) {
+  muatKeahlian();
+}
+
+// 4. Daftar proyek (halaman Proyek), data dari data/proyek.json
+let proyek = [];
 const daftarProyek = document.querySelector("#daftar-proyek");
 const jumlahProyek = document.querySelector("#jumlah-proyek");
 const filterProyek = document.querySelector("#filter-proyek");
@@ -179,8 +148,31 @@ function tampilkanProyek(kategori = "Semua") {
   }
 }
 
+async function muatProyek() {
+  if (daftarProyek && jumlahProyek) {
+    jumlahProyek.textContent = "Memuat proyek...";
+  }
+
+  try {
+    const response = await fetch("data/proyek.json");
+    if (!response.ok) {
+      throw new Error(`Status ${response.status}`);
+    }
+    proyek = await response.json();
+    tampilkanProyek("Semua");
+  } catch (error) {
+    if (daftarProyek) {
+      daftarProyek.replaceChildren();
+    }
+    if (jumlahProyek) {
+      jumlahProyek.textContent = "Data proyek gagal dimuat.";
+    }
+    console.error("Data proyek gagal dimuat:", error);
+  }
+}
+
 if (daftarProyek && jumlahProyek) {
-  tampilkanProyek();
+  muatProyek();
 }
 
 filterProyek?.addEventListener("click", (event) => {
@@ -191,3 +183,47 @@ filterProyek?.addEventListener("click", (event) => {
     tampilkanProyek(tombol.dataset.filter);
   }
 });
+
+// 5. Repositori GitHub terbaru (halaman Proyek)
+const username = "ZakkPi";
+const alamatRepo = `https://api.github.com/users/${username}/repos`;
+const pilihan = "?per_page=100";
+const daftarRepo = document.querySelector("#daftar-repo");
+const statusRepo = document.querySelector("#status-repo");
+
+async function ambilRepo() {
+  if (!daftarRepo || !statusRepo) return;
+
+  statusRepo.textContent = "Memuat...";
+  try {
+    const response = await fetch(alamatRepo + pilihan);
+    if (!response.ok) {
+      throw new Error(`Status ${response.status}`);
+    }
+
+    const repos = (await response.json())
+      .sort((a, b) => b.updated_at.localeCompare(a.updated_at))
+      .slice(0, 6);
+    daftarRepo.replaceChildren();
+    repos.forEach((repo) => {
+      const item = document.createElement("li");
+      const tautan = document.createElement("a");
+      tautan.href = repo.html_url;
+      tautan.target = "_blank";
+      tautan.rel = "noopener";
+      tautan.textContent = `${repo.name} (${repo.language || "tanpa bahasa"}, ${repo.stargazers_count || 0} bintang)`;
+      item.appendChild(tautan);
+      daftarRepo.appendChild(item);
+    });
+
+    statusRepo.textContent = `${repos.length} repositori yang terakhir diperbarui:`;
+  } catch (error) {
+    daftarRepo.replaceChildren();
+    statusRepo.textContent = "Maaf, daftar repositori gagal dimuat. Periksa username atau coba lagi nanti.";
+    console.error("Data repositori GitHub gagal dimuat:", error);
+  }
+}
+
+if (daftarRepo) {
+  ambilRepo();
+}
